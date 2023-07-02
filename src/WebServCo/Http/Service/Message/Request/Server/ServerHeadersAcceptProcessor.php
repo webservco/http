@@ -27,7 +27,7 @@ final class ServerHeadersAcceptProcessor implements ServerHeadersAcceptProcessor
     {
         $array = $request->getHeader('Accept');
         if (!array_key_exists(0, $array)) {
-            throw new OutOfBoundsException('Header array is empty.');
+            throw new OutOfBoundsException('Accept header array is empty.');
         }
 
         return $array[0];
