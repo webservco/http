@@ -1,3 +1,4 @@
+.docker
 composer.lock
 config/.env.ini
 vendor/

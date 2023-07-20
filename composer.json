@@ -38,7 +38,8 @@
         "slevomat/coding-standard": "^8",
         "squizlabs/php_codesniffer" : "^3",
         "vimeo/psalm": "^5",
-        "webservco/coding-standards": "^0"
+        "webservco/coding-standards": "^0",
+        "webservco/component-common": "^0"
     },
     "require": {
         "php" : "^8.2",
@@ -52,12 +53,12 @@
     "scripts": {
         "check:lint": "vendor/bin/parallel-lint bin config public resources src tests",
         "check:phan": "vendor/bin/phan --config-file vendor/webservco/coding-standards/phan/config.php",
-        "check:phpcs": "vendor/bin/phpcs --standard=.phpcs/php-coding-standard.xml --extensions=php -sp bin config public resources src tests",
+        "check:phpcs": "vendor/bin/phpcs --standard=vendor/webservco/component-common/.phpcs/php-coding-standard.xml --extensions=php -sp bin config public resources src tests",
         "check:phpmd": "vendor/bin/phpmd bin,config,public,resources,src,tests json vendor/webservco/coding-standards/phpmd/phpmd-rule-set.xml",
         "check:phpstan": "vendor/bin/phpstan analyse bin config public resources src tests --ansi -c vendor/webservco/coding-standards/phpstan/phpstan.neon --level=max",
         "check:psalm": "vendor/bin/psalm --config=vendor/webservco/coding-standards/psalm/psalm.xml --no-diff",
         "check:skeleton": "vendor/bin/pds-skeleton validate .",
-        "fix:phpcs": "vendor/bin/phpcbf --standard=.phpcs/php-coding-standard.xml --extensions=php -sp bin config public resources src tests",
+        "fix:phpcs": "vendor/bin/phpcbf --standard=vendor/webservco/component-common/.phpcs/php-coding-standard.xml --extensions=php -sp bin config public resources src tests",
         "test" : "vendor/bin/phpunit --colors=always --configuration vendor/webservco/coding-standards/phpunit/phpunit-10.xml --display-deprecations --display-errors --display-incomplete --display-notices --display-skipped --display-warnings",
         "test:dox" : "@test --testdox"
     },
