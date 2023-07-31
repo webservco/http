@@ -6,7 +6,7 @@ namespace WebServCo\Http\Service\Message\Request\Server;
 
 use OutOfBoundsException;
 use Psr\Http\Message\ServerRequestInterface;
-use WebServCo\DataTransfer\DataTransferObject\KeyValue\StringString;
+use WebServCo\Data\DataTransferObject\KeyValue\StringString;
 use WebServCo\Http\Contract\Message\Request\Server\ServerHeadersAcceptProcessorInterface;
 
 use function array_key_exists;

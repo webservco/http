@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
-use WebServCo\DataTransfer\DataTransferObject\KeyValue\StringString;
+use WebServCo\Data\DataTransferObject\KeyValue\StringString;
 use WebServCo\Http\Factory\Message\Request\Server\ServerRequestFactory;
 use WebServCo\Http\Factory\Message\Stream\StreamFactory;
 use WebServCo\Http\Factory\Message\UploadedFileFactory;
