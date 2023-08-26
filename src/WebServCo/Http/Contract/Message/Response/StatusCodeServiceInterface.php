@@ -6,9 +6,11 @@ namespace WebServCo\Http\Contract\Message\Response;
 
 use Fig\Http\Message\StatusCodeInterface;
 
+/**
+ * @phpcs:disable SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys.IncorrectKeyOrder
+ */
 interface StatusCodeServiceInterface extends StatusCodeInterface
 {
-    // @phpcs:ignore SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys.IncorrectKeyOrder
     public const STATUS_CODES = [
         // Informational 1xx
         // 100
@@ -141,6 +143,16 @@ interface StatusCodeServiceInterface extends StatusCodeInterface
         // 511,
         self::STATUS_NETWORK_AUTHENTICATION_REQUIRED => 'Network Authentication Required',
     ];
+
+    public const REDIRECT_STATUS_CODES = [
+        // 302
+        self::STATUS_FOUND => 'Moved Temporarily',
+        // 301
+        self::STATUS_MOVED_PERMANENTLY => 'Moved Permanently',
+        // 303
+        self::STATUS_SEE_OTHER => 'See Other',
+    ];
+    // @phpcs:enable
 
     public function getReasonPhraseByStatusCode(int $code): string;
 
