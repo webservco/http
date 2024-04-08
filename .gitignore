@@ -1,3 +1,4 @@
+.idea/
 .docker
 composer.lock
 config/.env.ini
