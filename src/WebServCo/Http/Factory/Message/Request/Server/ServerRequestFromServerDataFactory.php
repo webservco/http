@@ -7,8 +7,14 @@ namespace WebServCo\Http\Factory\Message\Request\Server;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\StreamInterface;
+use UnexpectedValueException;
+use WebServCo\Http\Contract\Message\Request\RequestBodyServiceInterface;
+use WebServCo\Http\Contract\Message\Request\RequestContentTypeProcessorInterface;
 use WebServCo\Http\Contract\Message\Request\Server\ServerRequestFromServerDataFactoryInterface;
 use WebServCo\Http\Contract\Message\UploadedFileParserInterface;
+use WebServCo\Http\Factory\Message\Request\RequestBodyServiceFactory;
+use WebServCo\Http\Factory\Message\Request\RequestContentTypeProcessorFactory;
 use WebServCo\Http\Factory\Message\Stream\StreamFactory;
 use WebServCo\Http\Factory\Message\UploadedFileParserFactory;
 use WebServCo\Http\Factory\Message\UriFactory;
@@ -16,7 +22,9 @@ use WebServCo\Http\Service\Message\Request\Method\RequestMethodService;
 use WebServCo\Http\Service\Message\Request\Server\ServerDataParser;
 use WebServCo\Http\Service\Message\Request\Server\ServerHeadersParser;
 
+use function fopen;
 use function in_array;
+use function is_resource;
 
 use const PHP_SAPI;
 
@@ -25,14 +33,22 @@ use const PHP_SAPI;
  */
 final class ServerRequestFromServerDataFactory implements ServerRequestFromServerDataFactoryInterface
 {
+    private RequestContentTypeProcessorInterface $requestContentTypeProcessor;
+
+    private RequestBodyServiceInterface $requestBodyService;
+
     private ServerRequestFactoryInterface $serverRequestFactory;
 
     private UploadedFileParserInterface $uploadedFileParser;
 
     public function __construct(
+        RequestContentTypeProcessorFactory $contentTypeProcFactory = new RequestContentTypeProcessorFactory(),
+        RequestBodyServiceFactory $requestBodyServiceFactory = new RequestBodyServiceFactory(),
         private ServerParamsProcessorFactory $serverParamsProcFactory = new ServerParamsProcessorFactory(),
-        StreamFactoryInterface $streamFactory = new StreamFactory(),
+        private StreamFactoryInterface $streamFactory = new StreamFactory(),
     ) {
+        $this->requestContentTypeProcessor = $contentTypeProcFactory->createRequestContentTypeProcessor();
+        $this->requestBodyService = $requestBodyServiceFactory->createRequestBodyService();
         $uploadedFileParserFactory = new UploadedFileParserFactory($streamFactory);
         $this->uploadedFileParser = $uploadedFileParserFactory->createUploadedFileParser();
         $this->serverRequestFactory = new ServerRequestFactory(
@@ -89,12 +105,56 @@ final class ServerRequestFromServerDataFactory implements ServerRequestFromServe
         }
 
         // Add web server data to the request.
-        return $serverRequest
+        $serverRequest = $serverRequest
         ->withCookieParams($cookieParams)
         ->withParsedBody($parsedBody)
         ->withQueryParams($queryParams)
         ->withUploadedFiles(
             $this->uploadedFileParser->parseSuperglobalUploadedFiles($uploadedFiles),
         );
+
+        /**
+         * Handle non form data request body.
+         */
+        return $this->processRequestBody($serverRequest);
+    }
+
+    /**
+     * Create request body from request.
+     */
+    private function createRequestBody(ServerRequestInterface $serverRequest): ?StreamInterface
+    {
+        switch ($this->requestContentTypeProcessor->getRequestContentType($serverRequest->getServerParams())) {
+            // Already available in $_POST data
+            case 'application/x-www-form-urlencoded':
+            case 'multipart/form-data':
+                return null;
+            /**
+             * "php://input is not available in POST requests with enctype="multipart/form-data"
+             * if enable_post_data_reading option is enabled."
+             */
+            default:
+                $resource = fopen('php://input', 'r');
+                if (!is_resource($resource)) {
+                    throw new UnexpectedValueException('Resource is not a resource object.');
+                }
+
+                return $this->streamFactory->createStreamFromResource($resource);
+        }
+    }
+
+    private function processRequestBody(ServerRequestInterface $serverRequest): ServerRequestInterface
+    {
+        if (!$this->requestBodyService->canHaveRequestBody($serverRequest)) {
+            return $serverRequest;
+        }
+
+        $requestBody = $this->createRequestBody($serverRequest);
+
+        if ($requestBody === null) {
+            return $serverRequest;
+        }
+
+        return $serverRequest->withBody($requestBody);
     }
 }
