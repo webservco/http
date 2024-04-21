@@ -19,7 +19,6 @@ use WebServCo\Http\Service\Message\Request\AbstractRequest;
 use WebServCo\Http\Service\Message\Request\Method\RequestMethodService;
 use WebServCo\Http\Service\Message\Request\Server\ServerDataParser;
 use WebServCo\Http\Service\Message\Request\Server\ServerHeadersAcceptProcessor;
-use WebServCo\Http\Service\Message\Request\Server\ServerHeadersParser;
 use WebServCo\Http\Service\Message\Request\Server\ServerRequest;
 use WebServCo\Http\Service\Message\Stream\AbstractStream;
 use WebServCo\Http\Service\Message\UploadedFileParser;
@@ -30,7 +29,6 @@ use WebServCo\Http\Service\Message\Uri;
 #[UsesClass(AbstractRequest::class)]
 #[UsesClass(AbstractStream::class)]
 #[UsesClass(ServerDataParser::class)]
-#[UsesClass(ServerHeadersParser::class)]
 #[UsesClass(ServerRequest::class)]
 #[UsesClass(ServerRequestFactory::class)]
 #[UsesClass(StreamFactory::class)]
@@ -79,7 +77,6 @@ final class ServerHeadersAcceptProcessorTest extends TestCase
             $streamFactory,
             new UploadedFileParser($streamFactory, new UploadedFileFactory()),
             new RequestMethodService(),
-            new ServerHeadersParser(),
             new ServerDataParser(),
             new UriFactory(),
         );

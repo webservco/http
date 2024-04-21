@@ -9,13 +9,10 @@ use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 use WebServCo\Http\Contract\Message\Request\Method\RequestMethodServiceInterface;
 use WebServCo\Http\Contract\Message\Request\Server\ServerDataParserInterface;
-use WebServCo\Http\Contract\Message\Request\Server\ServerHeadersParserInterface;
 use WebServCo\Http\Contract\Message\UploadedFileParserInterface;
 use WebServCo\Http\Service\Message\Request\AbstractRequest;
 
 use function array_key_exists;
-use function array_keys;
-use function strtolower;
 
 final class ServerRequest extends AbstractRequest implements ServerRequestInterface
 {
@@ -70,7 +67,6 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      * @phpcs:enable
      */
     public function __construct(
-        private ServerHeadersParserInterface $serverHeadersParser,
         private ServerDataParserInterface $serverDataParser,
         private UploadedFileParserInterface $uploadedFileParser,
         RequestMethodServiceInterface $requestMethodService,
@@ -87,12 +83,6 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
         $this->queryParams = [];
         $this->serverParams = $this->serverDataParser->parseServerParams($serverParams);
         $this->uploadedFiles = [];
-        // Parse headers from server data.
-        $this->headers = $this->serverHeadersParser->parseServerHeaders($this->serverParams);
-        // Set header mapping.
-        foreach (array_keys($this->headers) as $field) {
-            $this->headersMap[strtolower($field)] = $field;
-        }
     }
 
     /**

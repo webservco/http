@@ -10,7 +10,6 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 use WebServCo\Http\Contract\Message\Request\Method\RequestMethodServiceInterface;
 use WebServCo\Http\Contract\Message\Request\Server\ServerDataParserInterface;
-use WebServCo\Http\Contract\Message\Request\Server\ServerHeadersParserInterface;
 use WebServCo\Http\Contract\Message\UploadedFileParserInterface;
 use WebServCo\Http\Service\Message\Request\Server\ServerRequest;
 
@@ -32,7 +31,6 @@ final class ServerRequestFactory implements ServerRequestFactoryInterface
         private StreamFactoryInterface $streamFactory,
         private UploadedFileParserInterface $uploadedFileParser,
         private RequestMethodServiceInterface $requestMethodService,
-        private ServerHeadersParserInterface $serverHeadersParser,
         private ServerDataParserInterface $serverDataParser,
         private UriFactoryInterface $uriFactory,
     ) {
@@ -56,7 +54,6 @@ final class ServerRequestFactory implements ServerRequestFactoryInterface
         }
 
         return new ServerRequest(
-            $this->serverHeadersParser,
             $this->serverDataParser,
             $this->uploadedFileParser,
             $this->requestMethodService,

@@ -20,7 +20,6 @@ use WebServCo\Http\Factory\Message\UploadedFileParserFactory;
 use WebServCo\Http\Factory\Message\UriFactory;
 use WebServCo\Http\Service\Message\Request\Method\RequestMethodService;
 use WebServCo\Http\Service\Message\Request\Server\ServerDataParser;
-use WebServCo\Http\Service\Message\Request\Server\ServerHeadersParser;
 
 use function fopen;
 use function in_array;
@@ -55,7 +54,6 @@ final class ServerRequestFromServerDataFactory implements ServerRequestFromServe
             $streamFactory,
             $this->uploadedFileParser,
             new RequestMethodService(),
-            new ServerHeadersParser(),
             new ServerDataParser(),
             new UriFactory(),
         );
