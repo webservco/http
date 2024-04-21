@@ -10,11 +10,11 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use UnexpectedValueException;
 use WebServCo\Http\Contract\Message\Request\RequestBodyServiceInterface;
-use WebServCo\Http\Contract\Message\Request\RequestContentTypeProcessorInterface;
+use WebServCo\Http\Contract\Message\Request\RequestHeaderServiceInterface;
 use WebServCo\Http\Contract\Message\Request\Server\ServerRequestFromServerDataFactoryInterface;
 use WebServCo\Http\Contract\Message\UploadedFileParserInterface;
 use WebServCo\Http\Factory\Message\Request\RequestBodyServiceFactory;
-use WebServCo\Http\Factory\Message\Request\RequestContentTypeProcessorFactory;
+use WebServCo\Http\Factory\Message\Request\RequestHeaderServiceFactory;
 use WebServCo\Http\Factory\Message\Stream\StreamFactory;
 use WebServCo\Http\Factory\Message\UploadedFileParserFactory;
 use WebServCo\Http\Factory\Message\UriFactory;
@@ -32,22 +32,22 @@ use const PHP_SAPI;
  */
 final class ServerRequestFromServerDataFactory implements ServerRequestFromServerDataFactoryInterface
 {
-    private RequestContentTypeProcessorInterface $requestContentTypeProcessor;
-
     private RequestBodyServiceInterface $requestBodyService;
+
+    private RequestHeaderServiceInterface $requestHeaderService;
 
     private ServerRequestFactoryInterface $serverRequestFactory;
 
     private UploadedFileParserInterface $uploadedFileParser;
 
     public function __construct(
-        RequestContentTypeProcessorFactory $contentTypeProcFactory = new RequestContentTypeProcessorFactory(),
         RequestBodyServiceFactory $requestBodyServiceFactory = new RequestBodyServiceFactory(),
+        RequestHeaderServiceFactory $requestHeaderServiceFactory = new RequestHeaderServiceFactory(),
         private ServerParamsProcessorFactory $serverParamsProcFactory = new ServerParamsProcessorFactory(),
         private StreamFactoryInterface $streamFactory = new StreamFactory(),
     ) {
-        $this->requestContentTypeProcessor = $contentTypeProcFactory->createRequestContentTypeProcessor();
         $this->requestBodyService = $requestBodyServiceFactory->createRequestBodyService();
+        $this->requestHeaderService = $requestHeaderServiceFactory->createRequestHeaderService();
         $uploadedFileParserFactory = new UploadedFileParserFactory($streamFactory);
         $this->uploadedFileParser = $uploadedFileParserFactory->createUploadedFileParser();
         $this->serverRequestFactory = new ServerRequestFactory(
@@ -122,7 +122,7 @@ final class ServerRequestFromServerDataFactory implements ServerRequestFromServe
      */
     private function createRequestBody(ServerRequestInterface $serverRequest): ?StreamInterface
     {
-        switch ($this->requestContentTypeProcessor->getRequestContentType($serverRequest->getServerParams())) {
+        switch ($this->requestHeaderService->getHeaderValue('Content-Type', $serverRequest)) {
             // Already available in $_POST data
             case 'application/x-www-form-urlencoded':
             case 'multipart/form-data':
