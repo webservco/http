@@ -10,12 +10,16 @@ use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;
 
 use function array_key_exists;
-use function array_keys;
 use function array_merge;
 use function implode;
 use function is_string;
 use function strtolower;
 
+/**
+ * AbstractMessage.
+ *
+ * This is used by both requests and responses.
+ */
 abstract class AbstractMessage implements MessageInterface
 {
     /**
@@ -41,14 +45,6 @@ abstract class AbstractMessage implements MessageInterface
     {
         $this->headers = $this->headersMap = [];
         $this->protocolVersion = '1.1';
-
-        // Process headers
-        $this->headers = $this->processHeaders();
-
-        // Set header mapping.
-        foreach (array_keys($this->headers) as $field) {
-            $this->headersMap[strtolower($field)] = $field;
-        }
     }
 
     public function getBody(): StreamInterface
@@ -249,18 +245,5 @@ abstract class AbstractMessage implements MessageInterface
         }
 
         return $this->headersMap[strtolower($name)];
-    }
-
-    /**
-     * @return array<string,array<string>>
-     */
-    private function processHeaders(): array
-    {
-        $headers = [];
-        foreach (apache_request_headers() as $name => $value) {
-            $headers[(string) $name][] = (string) $value;
-        }
-
-        return $headers;
     }
 }

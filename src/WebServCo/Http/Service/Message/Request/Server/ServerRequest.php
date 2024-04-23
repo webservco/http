@@ -12,8 +12,14 @@ use WebServCo\Http\Contract\Message\Request\Server\ServerDataParserInterface;
 use WebServCo\Http\Contract\Message\UploadedFileParserInterface;
 use WebServCo\Http\Service\Message\Request\AbstractRequest;
 
+use function apache_request_headers;
 use function array_key_exists;
+use function array_keys;
+use function strtolower;
 
+/**
+ * "Representation of an incoming, server-side HTTP request."
+ */
 final class ServerRequest extends AbstractRequest implements ServerRequestInterface
 {
     /**
@@ -83,6 +89,14 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
         $this->queryParams = [];
         $this->serverParams = $this->serverDataParser->parseServerParams($serverParams);
         $this->uploadedFiles = [];
+
+        // Process server request specific headers.
+        $this->headers = $this->processHeaders();
+
+        // Set header mapping.
+        foreach (array_keys($this->headers) as $field) {
+            $this->headersMap[strtolower($field)] = $field;
+        }
     }
 
     /**
@@ -273,5 +287,18 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
         $clone->uploadedFiles = $this->uploadedFileParser->parsePsrUploadedFiles($uploadedFiles);
 
         return $clone;
+    }
+
+    /**
+     * @return array<string,array<string>>
+     */
+    private function processHeaders(): array
+    {
+        $headers = [];
+        foreach (apache_request_headers() as $name => $value) {
+            $headers[(string) $name][] = (string) $value;
+        }
+
+        return $headers;
     }
 }
