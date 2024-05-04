@@ -31,7 +31,9 @@
         "fig/http-message-util": "^1",
         "psr/http-server-handler": "^1",
         "psr/http-server-middleware": "^1",
-        "webservco/data": "^0"
+        "webservco/data": "^0",
+        "webservco/http-request-service": "^0",
+        "webservco/http-response-service": "^0"
     },
     "require-dev": {
         "pds/skeleton": "^1",
