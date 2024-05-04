@@ -18,13 +18,13 @@ use WebServCo\Http\Service\Message\AbstractMessage;
 use WebServCo\Http\Service\Message\Request\AbstractRequest;
 use WebServCo\Http\Service\Message\Request\Method\RequestMethodService;
 use WebServCo\Http\Service\Message\Request\Server\ServerDataParser;
-use WebServCo\Http\Service\Message\Request\Server\ServerHeadersAcceptProcessor;
+use WebServCo\Http\Service\Message\Request\Server\ServerHeadersAcceptService;
 use WebServCo\Http\Service\Message\Request\Server\ServerRequest;
 use WebServCo\Http\Service\Message\Stream\AbstractStream;
 use WebServCo\Http\Service\Message\UploadedFileParser;
 use WebServCo\Http\Service\Message\Uri;
 
-#[CoversClass(ServerHeadersAcceptProcessor::class)]
+#[CoversClass(ServerHeadersAcceptService::class)]
 #[UsesClass(AbstractMessage::class)]
 #[UsesClass(AbstractRequest::class)]
 #[UsesClass(AbstractStream::class)]
@@ -44,14 +44,14 @@ final class ServerHeadersAcceptProcessorTest extends TestCase
     {
         $serverRequest = $this->createServerRequest('foo', 'bar', ['HTTP_ACCEPT' => self::HTTP_ACCEPT]);
 
-        $serverHeadersAcceptProcessor = new ServerHeadersAcceptProcessor();
+        $serverHeadersAcceptService = new ServerHeadersAcceptService();
 
-        self::assertEquals(self::HTTP_ACCEPT, $serverHeadersAcceptProcessor->getAcceptHeaderValue($serverRequest));
+        self::assertEquals(self::HTTP_ACCEPT, $serverHeadersAcceptService->getAcceptHeaderValue($serverRequest));
     }
 
     public function testGetAcceptHeaderValueWorks(): void
     {
-        $serverHeadersAcceptProcessor = new ServerHeadersAcceptProcessor();
+        $serverHeadersAcceptService = new ServerHeadersAcceptService();
 
         $expected = [
             '0.8.1' => '*/*',
@@ -61,7 +61,7 @@ final class ServerHeadersAcceptProcessorTest extends TestCase
             '1.5' => 'application/xhtml+xml',
             '1.6' => 'text/html',
         ];
-        self::assertEquals($expected, $serverHeadersAcceptProcessor->processAcceptList(self::HTTP_ACCEPT));
+        self::assertEquals($expected, $serverHeadersAcceptService->parseAcceptList(self::HTTP_ACCEPT));
     }
 
     /**
