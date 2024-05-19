@@ -50,7 +50,7 @@ final class ServerDataParser implements ServerDataParserInterface
         $parsedParams = [];
         foreach ($params as $key => $value) {
             /**
-             * No need to check key type, it cna only be int or string:
+             * No need to check key type, it can only be int or string:
              * https://www.php.net/manual/en/language.types.array.php
              * "The key can either be an int or a string. The value can be of any type."
              */
