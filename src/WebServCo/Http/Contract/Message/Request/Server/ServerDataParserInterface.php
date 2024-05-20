@@ -20,8 +20,8 @@ interface ServerDataParserInterface
      * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
      * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
      * @param mixed[] $params
+     * @return array<mixed>
      * @phpcs:enable
-     * @return array<int|string,string>
      */
     public function parseCookieQueryParams(array $params): array;
 

@@ -31,8 +31,11 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
     /**
      * Cookie.
      *
-     * @var array<int|string,string>
-     */
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
+     * @var array<mixed>
+     * @phpcs:enable
+    */
     private array $cookieParams;
 
     /**
@@ -45,7 +48,10 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
     /**
      * Query
      *
-     * @var array<int|string,string>
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
+     * @var array<mixed>
+     * @phpcs:enable
      */
     private array $queryParams;
 
@@ -130,7 +136,10 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
     /**
      * Retrieve cookies.
      *
-     * @return array<int|string,string>
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
+     * @return array<mixed>
+     * @phpcs:enable
      */
     public function getCookieParams(): array
     {
@@ -150,7 +159,12 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
     /**
      * Retrieve query string arguments.
      *
-     * @return array<int|string,string>
+     * Array can be multidimensional, hence the mixed type.
+     *
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
+     * @return array<mixed>
+     * @phpcs:enable
      */
     public function getQueryParams(): array
     {

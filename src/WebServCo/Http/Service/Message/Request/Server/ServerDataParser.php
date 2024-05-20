@@ -42,8 +42,8 @@ final class ServerDataParser implements ServerDataParserInterface
      * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
      * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
      * @param mixed[] $params
+     * @return array<mixed>
      * @phpcs:enable
-     * @return array<int|string,string>
      */
     public function parseCookieQueryParams(array $params): array
     {
@@ -55,10 +55,14 @@ final class ServerDataParser implements ServerDataParserInterface
              * "The key can either be an int or a string. The value can be of any type."
              */
 
-            if (!is_string($value)) {
-                throw new InvalidArgumentException('Invalid value specified.');
-            }
-            $parsedParams[$key] = $value;
+            /**
+             * Value can be an array
+             * Situation: query params can be a multi dimensional array.
+             * Eg. "?filter[post]=1,2&filter[author]=12"
+             */
+            $parsedParams[$key] = is_array($value)
+                ? $this->parseCookieQueryParams($value)
+                : $this->extractStringDataFromParam($value);
         }
 
         return $parsedParams;
@@ -89,6 +93,15 @@ final class ServerDataParser implements ServerDataParserInterface
         }
 
         return $parsedParams;
+    }
+
+    private function extractStringDataFromParam(mixed $value): string
+    {
+        if (!is_string($value)) {
+            throw new InvalidArgumentException('Invalid value specified.');
+        }
+
+        return $value;
     }
 
     /**
