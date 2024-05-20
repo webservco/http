@@ -309,6 +309,12 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
     private function processHeaders(): array
     {
         $headers = [];
+        /**
+         * Psalm error: "Unable to determine the type that $.. is being assigned to"
+         * However this is indeed mixed, no solution but to suppress error.
+         *
+         * @psalm-suppress MixedAssignment
+         */
         foreach (apache_request_headers() as $name => $value) {
             $headers[(string) $name][] = (string) $value;
         }

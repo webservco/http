@@ -48,6 +48,13 @@ final class ServerDataParser implements ServerDataParserInterface
     public function parseCookieQueryParams(array $params): array
     {
         $parsedParams = [];
+
+        /**
+         * Psalm error: "Unable to determine the type that $.. is being assigned to"
+         * However this is indeed mixed, no solution but to suppress error.
+         *
+         * @psalm-suppress MixedAssignment
+         */
         foreach ($params as $key => $value) {
             /**
              * No need to check key type, it can only be int or string:
