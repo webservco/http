@@ -19,6 +19,8 @@ final class Response extends AbstractMessage implements ResponseInterface
     ) {
         parent::__construct($body);
 
+        $this->statusCodeService->validateStatusCode($this->statusCode);
+
         $this->reasonPhrase = $this->processReasonPhrase($statusCode, $reasonPhrase);
     }
 
