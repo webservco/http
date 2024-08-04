@@ -28,7 +28,9 @@ final class ResponseFactory implements ResponseFactoryInterface
              * \Psr\Http\Message\StreamInterface
              */
             $this->streamFactory->createStream(''),
+            // code is validated in the Response.
             $code,
+            // reasonPhrase is processed in the Response.
             $reasonPhrase,
         );
     }
