@@ -251,13 +251,9 @@ final class Uri implements UriInterface
                  * PHPStan false positive:
                  * "Method WebServCo\Http\Service\Message\Uri::parseUrlComponent() should return
                  * bool|int|string|null but returns array<string, int|string>|false."
-                 *
                  * https://phpstan.org/r/1fe9cbdd-0a14-4922-9330-c39431615640
                  *
-                 * Note: in upcoming PHPStan version 1.11 it will be possible to do:
-                 * "@phpstan-ignore return.type (PHPStan bug)"
-                 *
-                 * @todo study
+                 * @phpstan-ignore return.type (PHPStan bug)
                  */
                 return parse_url($url, PHP_URL_SCHEME);
             case PHP_URL_USER:
