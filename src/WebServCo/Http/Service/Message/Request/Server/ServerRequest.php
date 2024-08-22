@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WebServCo\Http\Service\Message\Request\Server;
 
+use OutOfBoundsException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
@@ -15,6 +16,7 @@ use WebServCo\Http\Service\Message\Request\AbstractRequest;
 use function apache_request_headers;
 use function array_key_exists;
 use function array_keys;
+use function function_exists;
 use function strtolower;
 
 /**
@@ -304,11 +306,19 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
     }
 
     /**
+     * "PhanUndeclaredFunction Call to undeclared function \apache_request_headers()"
      * @return array<string,array<string>>
+     * @suppress PhanUndeclaredFunction
      */
     private function processHeaders(): array
     {
         $headers = [];
+
+        // "Works in the Apache, FastCGI, CLI, and FPM webservers. "
+        if (!function_exists('apache_request_headers')) {
+            throw new OutOfBoundsException('Function apache_request_headers does not exist.');
+        }
+
         /**
          * Psalm error: "Unable to determine the type that $.. is being assigned to"
          * However this is indeed mixed, no solution but to suppress error.
