@@ -79,8 +79,8 @@ final class Stream extends AbstractStream implements StreamInterface
             throw new OutOfBoundsException('Resource is not readable.');
         }
 
-        if ($length < 0) {
-            throw new RangeException('Length is not greater than zero.');
+        if ($length < 1) {
+            throw new RangeException('Length is less than one.');
         }
 
         $result = fread($this->resource, $length);
