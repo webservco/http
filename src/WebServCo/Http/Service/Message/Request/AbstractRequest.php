@@ -16,7 +16,7 @@ use function strtolower;
 
 abstract class AbstractRequest extends AbstractMessage implements RequestInterface
 {
-    protected const HOST_HEADER_NAME = 'Host';
+    protected const string HOST_HEADER_NAME = 'Host';
 
     protected ?string $requestTarget;
 
