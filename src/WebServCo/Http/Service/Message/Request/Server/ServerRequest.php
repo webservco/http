@@ -307,6 +307,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
 
     /**
      * "PhanUndeclaredFunction Call to undeclared function \apache_request_headers()"
+     *
      * @return array<string,array<string>>
      * @suppress PhanUndeclaredFunction
      */
