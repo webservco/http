@@ -37,14 +37,20 @@ final class Uri implements UriInterface
     {
         $this->fragment = (string) $this->parseUrlString($url, PHP_URL_FRAGMENT);
 
+        /**
+         * "The value returned MUST be normalized to lowercase, per RFC 3986 Section 3.2.2."
+         */
         $this->host = strtolower((string) $this->parseUrlString($url, PHP_URL_HOST));
 
         $this->port = $this->parseUrlPort($url);
 
-        $this->path = strtolower((string) $this->parseUrlString($url, PHP_URL_PATH));
+        $this->path = (string) $this->parseUrlString($url, PHP_URL_PATH);
 
-        $this->query = strtolower((string) $this->parseUrlString($url, PHP_URL_QUERY));
+        $this->query = (string) $this->parseUrlString($url, PHP_URL_QUERY);
 
+        /**
+         * "The value returned MUST be normalized to lowercase, per RFC 3986 Section 3.1."
+         */
         $this->scheme = strtolower((string) $this->parseUrlString($url, PHP_URL_SCHEME));
 
         $this->user = (string) $this->parseUrlString($url, PHP_URL_USER);
