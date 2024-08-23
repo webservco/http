@@ -9,6 +9,9 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 use WebServCo\Http\Contract\Message\Request\Method\RequestMethodServiceInterface;
+use WebServCo\Http\Factory\Message\Stream\StreamFactory;
+use WebServCo\Http\Factory\Message\UriFactory;
+use WebServCo\Http\Service\Message\Request\Method\RequestMethodService;
 use WebServCo\Http\Service\Message\Request\Request;
 
 use function is_string;
@@ -16,9 +19,9 @@ use function is_string;
 final class RequestFactory implements RequestFactoryInterface
 {
     public function __construct(
-        private RequestMethodServiceInterface $requestMethodService,
-        private StreamFactoryInterface $streamFactory,
-        private UriFactoryInterface $uriFactory,
+        private RequestMethodServiceInterface $requestMethodService = new RequestMethodService(),
+        private StreamFactoryInterface $streamFactory = new StreamFactory(),
+        private UriFactoryInterface $uriFactory = new UriFactory(),
     ) {
     }
 
