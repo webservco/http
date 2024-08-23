@@ -109,11 +109,7 @@ final class ServerParamsProcessor implements ServerParamsProcessorInterface
          * SERVER_PROTOCOL = HTTP/1.1
          */
         $serverProtocol = $this->getServerParamStringValue('SERVER_PROTOCOL');
-        if ($serverProtocol !== 'HTTP/1.1') {
-            /**
-             * For the moment we only support the HTTP protocol, version 1.1.
-             * (1.0 - too old, 2.0 no use case yet.)
-             */
+        if (!in_array($serverProtocol, ['HTTP/1.1', 'HTTP/2.0'], true)) {
             throw new LogicException('Unsupported server protocol.');
         }
 
