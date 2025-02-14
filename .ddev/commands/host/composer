@@ -1,0 +1,7 @@
+#!/bin/bash
+
+## Description: Composer shortcut command
+## Usage: c
+## Example: ddev c
+
+ddev composer $@
