@@ -31,7 +31,7 @@ use const PHP_SAPI;
  * Helper to create custom ServerRequestInterface implementations.
  *
  * @todo solve CouplingBetweenObjects
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  */
 final class ServerRequestFromServerDataFactory implements ServerRequestFromServerDataFactoryInterface
 {

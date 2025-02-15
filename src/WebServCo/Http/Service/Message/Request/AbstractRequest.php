@@ -107,7 +107,7 @@ abstract class AbstractRequest extends AbstractMessage implements RequestInterfa
      *
      * PHPMD error BooleanArgumentFlag; "PSR made me do it"
      *
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     * @SuppressWarnings("PHPMD.BooleanArgumentFlag")
      * @param bool $preserveHost
      * @return static
      */
