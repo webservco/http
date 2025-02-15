@@ -35,9 +35,9 @@
         "fig/http-message-util": "^1",
         "psr/http-server-handler": "^1",
         "psr/http-server-middleware": "^1",
-        "webservco/data": "^0",
-        "webservco/http-request-service": "^0",
-        "webservco/http-response-service": "^0"
+        "webservco/data": "^1",
+        "webservco/http-request-service": "^1",
+        "webservco/http-response-service": "^1"
     },
     "require-dev": {
         "pds/skeleton": "^1",
@@ -54,8 +54,8 @@
         "slevomat/coding-standard": "^8",
         "squizlabs/php_codesniffer" : "^3",
         "vimeo/psalm": "^6",
-        "webservco/coding-standards": "^0",
-        "webservco/component-common": "^0"
+        "webservco/coding-standards": "^1",
+        "webservco/component-common": "^1"
     },
     "scripts": {
         "check:lint": "vendor/bin/parallel-lint bin config public resources src tests",
