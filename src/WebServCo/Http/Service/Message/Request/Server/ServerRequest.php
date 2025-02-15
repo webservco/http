@@ -323,10 +323,14 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
         }
 
         /**
-         * Psalm error: "Unable to determine the type that $.. is being assigned to"
+         * Psalm error: MixedAssignment "Unable to determine the type that $.. is being assigned to"
          * However this is indeed mixed, no solution but to suppress error.
          *
-         * @psalm-suppress MixedAssignment
+         * Psalm error: PossiblyFalseIterator
+         * "Cannot iterate over falsable var array<array-key, mixed>|false (see https://psalm.dev/164)"
+         * However, false is not returned: https://www.php.net/apache_request_headers
+         *
+         * @psalm-suppress MixedAssignment,PossiblyFalseIterator
          */
         foreach (apache_request_headers() as $name => $value) {
             if (!is_scalar($value)) {
