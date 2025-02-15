@@ -86,7 +86,7 @@ final class UploadedFile implements UploadedFileInterface
         return $this->errorCode;
     }
 
-    public function getSize(): ?int
+    public function getSize(): int
     {
         return $this->size;
     }

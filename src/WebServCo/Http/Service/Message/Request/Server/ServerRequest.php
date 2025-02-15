@@ -8,6 +8,7 @@ use OutOfBoundsException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
+use UnexpectedValueException;
 use WebServCo\Http\Contract\Message\Request\Method\RequestMethodServiceInterface;
 use WebServCo\Http\Contract\Message\Request\Server\ServerDataParserInterface;
 use WebServCo\Http\Contract\Message\UploadedFileParserInterface;
@@ -17,6 +18,7 @@ use function apache_request_headers;
 use function array_key_exists;
 use function array_keys;
 use function function_exists;
+use function is_scalar;
 use function strtolower;
 
 /**
@@ -327,6 +329,9 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
          * @psalm-suppress MixedAssignment
          */
         foreach (apache_request_headers() as $name => $value) {
+            if (!is_scalar($value)) {
+                throw new UnexpectedValueException('Header value is not scalar.');
+            }
             $headers[(string) $name][] = (string) $value;
         }
 
