@@ -100,7 +100,7 @@ final class UploadedFile implements UploadedFileInterface
     public function getStream(): StreamInterface
     {
         if ($this->errorCode !== UPLOAD_ERR_OK) {
-            throw new UnexpectedValueException(self::ERROR_MESSAGES[$this->errorCode]);
+            throw new UnexpectedValueException(self::ERROR_MESSAGES[$this->errorCode] ?? 'Unknown error.');
         }
 
         if (!$this->isMoved) {

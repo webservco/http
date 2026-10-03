@@ -68,7 +68,7 @@ abstract class AbstractMessage implements MessageInterface
             return [];
         }
 
-        $name = $this->headersMap[strtolower($name)];
+        $name = $this->getOriginalHeaderName($name);
 
         if (!array_key_exists($name, $this->headers)) {
             throw new OutOfBoundsException('Header not found.');
@@ -149,7 +149,7 @@ abstract class AbstractMessage implements MessageInterface
 
         $originalName = $clone->getOriginalHeaderName($name);
 
-        $clone->headers[$originalName] = array_merge($clone->headers[$originalName], $value);
+        $clone->headers[$originalName] = array_merge($clone->headers[$originalName] ?? [], $value);
 
         return $clone;
     }
@@ -252,10 +252,12 @@ abstract class AbstractMessage implements MessageInterface
      */
     protected function getOriginalHeaderName(string $name): string
     {
-        if (!$this->hasHeader($name)) {
+        $lowercaseName = strtolower($name);
+
+        if (!array_key_exists($lowercaseName, $this->headersMap)) {
             throw new InvalidArgumentException('Specified header name does not exist.');
         }
 
-        return $this->headersMap[strtolower($name)];
+        return $this->headersMap[$lowercaseName];
     }
 }
