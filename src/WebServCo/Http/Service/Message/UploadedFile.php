@@ -36,7 +36,7 @@ use const UPLOAD_ERR_PARTIAL;
 final class UploadedFile implements UploadedFileInterface
 {
     // @phpcs:ignore SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys.IncorrectKeyOrder
-    private const ERROR_MESSAGES = [
+    private const array ERROR_MESSAGES = [
         // 0
         UPLOAD_ERR_OK => 'There is no error, the file uploaded with success.',
         // 1

@@ -38,7 +38,8 @@ use WebServCo\Http\Service\Message\Uri;
 #[UsesClass(UriFactory::class)]
 final class ServerHeadersAcceptProcessorTest extends TestCase
 {
-    private const HTTP_ACCEPT = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8';
+    private const string HTTP_ACCEPT = 'text/html,application/xhtml+xml,application/xml;q=0.9,'
+        . 'image/avif,image/webp,*/*;q=0.8';
 
     public function testGetAcceptStringWorks(): void
     {
