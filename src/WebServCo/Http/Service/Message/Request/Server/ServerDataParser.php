@@ -63,9 +63,7 @@ final class ServerDataParser implements ServerDataParserInterface
              * No need to check key type, it can only be int or string:
              * https://www.php.net/manual/en/language.types.array.php
              * "The key can either be an int or a string. The value can be of any type."
-             */
-
-            /**
+             *
              * Value can be an array
              * Situation: query params can be a multi dimensional array.
              * Eg. "?filter[post]=1,2&filter[author]=12"

@@ -222,12 +222,6 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
     }
 
     /**
-     * Return an instance that removes the specified derived request attribute.
-     *
-     * @param string $name
-     */
-
-    /**
      * Return an instance with the specified cookies.
      *
      * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
