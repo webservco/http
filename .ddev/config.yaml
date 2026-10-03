@@ -18,7 +18,7 @@ corepack_enable: false
 omit_containers: [db]
 php_version: "8.4"
 timezone: Europe/Budapest
-webimage_extra_packages: [php-ast]
+webimage_extra_packages: [php8.4-ast]
 webserver_type: apache-fpm
 
 # Key features of DDEV's config.yaml:
