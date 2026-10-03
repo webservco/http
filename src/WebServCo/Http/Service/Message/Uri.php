@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WebServCo\Http\Service\Message;
 
 use InvalidArgumentException;
+use Override;
 use Psr\Http\Message\UriInterface;
 
 use function is_int;
@@ -58,6 +59,7 @@ final class Uri implements UriInterface
         $this->password = $this->parseUrlString($url, PHP_URL_PASS);
     }
 
+    #[Override]
     public function getAuthority(): string
     {
         $port = $this->getPort();
@@ -75,36 +77,43 @@ final class Uri implements UriInterface
         );
     }
 
+    #[Override]
     public function getFragment(): string
     {
         return $this->fragment;
     }
 
+    #[Override]
     public function getHost(): string
     {
         return $this->host;
     }
 
+    #[Override]
     public function getPath(): string
     {
         return $this->path;
     }
 
+    #[Override]
     public function getPort(): int|null
     {
         return $this->port;
     }
 
+    #[Override]
     public function getQuery(): string
     {
         return $this->query;
     }
 
+    #[Override]
     public function getScheme(): string
     {
         return $this->scheme;
     }
 
+    #[Override]
     public function getUserInfo(): string
     {
         return sprintf(
@@ -122,6 +131,7 @@ final class Uri implements UriInterface
      * @param string $fragment
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function withFragment($fragment): self
     {
         if ($fragment === $this->fragment) {
@@ -139,6 +149,7 @@ final class Uri implements UriInterface
      * @param string $host
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function withHost($host): self
     {
         if ($host === $this->host) {
@@ -156,6 +167,7 @@ final class Uri implements UriInterface
      * @param int|null $port
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function withPort($port): self
     {
         if ($port === $this->port) {
@@ -173,6 +185,7 @@ final class Uri implements UriInterface
      * @param string $path
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function withPath($path): self
     {
         if ($path === $this->path) {
@@ -190,6 +203,7 @@ final class Uri implements UriInterface
      * @param string $query
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function withQuery($query): self
     {
         if ($query === $this->query) {
@@ -207,6 +221,7 @@ final class Uri implements UriInterface
      * @param string $scheme
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function withScheme($scheme): self
     {
         if ($scheme === $this->scheme) {
@@ -225,6 +240,7 @@ final class Uri implements UriInterface
      * @param string|null $password
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function withUserInfo($user, $password = null): self
     {
         if ($user === $this->user && $password === $this->password) {

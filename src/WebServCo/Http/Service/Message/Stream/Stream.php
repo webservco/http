@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WebServCo\Http\Service\Message\Stream;
 
 use OutOfBoundsException;
+use Override;
 use Psr\Http\Message\StreamInterface;
 use RangeException;
 use UnexpectedValueException;
@@ -22,6 +23,7 @@ use const SEEK_SET;
 
 final class Stream extends AbstractStream implements StreamInterface
 {
+    #[Override]
     public function close(): void
     {
         if (!is_resource($this->resource)) {
@@ -42,6 +44,7 @@ final class Stream extends AbstractStream implements StreamInterface
      *
      * @return resource|null Underlying PHP stream, if any
      */
+    #[Override]
     public function detach(): mixed
     {
         $resource = $this->resource;
@@ -54,6 +57,7 @@ final class Stream extends AbstractStream implements StreamInterface
         return $resource;
     }
 
+    #[Override]
     public function eof(): bool
     {
         if (!is_resource($this->resource)) {
@@ -69,6 +73,7 @@ final class Stream extends AbstractStream implements StreamInterface
      * @param int $length
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function read($length): string
     {
         if (!is_resource($this->resource)) {
@@ -92,6 +97,7 @@ final class Stream extends AbstractStream implements StreamInterface
         return $result;
     }
 
+    #[Override]
     public function rewind(): void
     {
         if (!is_resource($this->resource)) {
@@ -108,6 +114,7 @@ final class Stream extends AbstractStream implements StreamInterface
      * @param int $whence
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function seek($offset, $whence = SEEK_SET): void
     {
         if (!is_resource($this->resource)) {
@@ -125,6 +132,7 @@ final class Stream extends AbstractStream implements StreamInterface
         }
     }
 
+    #[Override]
     public function tell(): int
     {
         if (!is_resource($this->resource)) {
@@ -146,6 +154,7 @@ final class Stream extends AbstractStream implements StreamInterface
      * @param string $string
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function write($string): int
     {
         if (!is_resource($this->resource)) {

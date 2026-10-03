@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WebServCo\Http\Service\Message\Response;
 
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use WebServCo\Http\Contract\Message\Response\StatusCodeServiceInterface;
@@ -24,11 +25,13 @@ final class Response extends AbstractMessage implements ResponseInterface
         $this->reasonPhrase = $this->processReasonPhrase($statusCode, $reasonPhrase);
     }
 
+    #[Override]
     public function getReasonPhrase(): string
     {
         return $this->reasonPhrase;
     }
 
+    #[Override]
     public function getStatusCode(): int
     {
         return $this->statusCode;
@@ -42,6 +45,7 @@ final class Response extends AbstractMessage implements ResponseInterface
      * @return static
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function withStatus($code, $reasonPhrase = ''): self
     {
         $this->statusCodeService->validateStatusCode($code);

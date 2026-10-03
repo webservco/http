@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WebServCo\Http\Factory\Message\Request\Server;
 
+use Override;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -78,6 +79,7 @@ final class ServerRequestFromServerDataFactory implements ServerRequestFromServe
      * @param array<int|string,mixed> $uploadedFiles
      * @phpcs:enable
      */
+    #[Override]
     public function createServerRequestFromServerData(
         array $allowedHosts = [],
         array $cookieParams = [],

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WebServCo\Http\Service\Message\Request\Server;
 
 use InvalidArgumentException;
+use Override;
 use WebServCo\Http\Contract\Message\Request\Server\ServerDataParserInterface;
 
 use function assert;
@@ -20,6 +21,7 @@ final class ServerDataParser implements ServerDataParserInterface
      *
      * @return array<string,string>|object|null
      */
+    #[Override]
     public function parseBodyData(mixed $data): array|object|null
     {
         if (is_array($data)) {
@@ -45,6 +47,7 @@ final class ServerDataParser implements ServerDataParserInterface
      * @return array<mixed>
      * @phpcs:enable
      */
+    #[Override]
     public function parseCookieQueryParams(array $params): array
     {
         $parsedParams = [];
@@ -85,6 +88,7 @@ final class ServerDataParser implements ServerDataParserInterface
      * @phpcs:enable
      * @return array<string,array<int,string>|scalar|null>
      */
+    #[Override]
     public function parseServerParams(array $serverParams): array
     {
         $parsedParams = [];

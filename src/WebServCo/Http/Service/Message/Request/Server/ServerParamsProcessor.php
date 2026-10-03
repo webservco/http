@@ -6,6 +6,7 @@ namespace WebServCo\Http\Service\Message\Request\Server;
 
 use LogicException;
 use OutOfBoundsException;
+use Override;
 use Psr\Http\Message\UriFactoryInterface;
 use Psr\Http\Message\UriInterface;
 use UnexpectedValueException;
@@ -50,6 +51,7 @@ final class ServerParamsProcessor implements ServerParamsProcessorInterface
     /**
      * Returns the processed method from the server data.
      */
+    #[Override]
     public function processMethod(): string
     {
         if (array_key_exists('REQUEST_METHOD', $this->serverParams)) {
@@ -77,6 +79,7 @@ final class ServerParamsProcessor implements ServerParamsProcessorInterface
      *
      * @return array<string,array<int,string>|scalar|null>
      */
+    #[Override]
     public function processParams(): array
     {
         return $this->serverParams;
@@ -85,6 +88,7 @@ final class ServerParamsProcessor implements ServerParamsProcessorInterface
     /**
      * Returns the processed Uri from the server data.
      */
+    #[Override]
     public function processUri(): UriInterface
     {
         return $this->uriFactory->createUri(

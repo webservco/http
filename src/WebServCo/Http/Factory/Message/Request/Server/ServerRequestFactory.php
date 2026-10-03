@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WebServCo\Http\Factory\Message\Request\Server;
 
+use Override;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -47,6 +48,7 @@ final class ServerRequestFactory implements ServerRequestFactoryInterface
      * @phpcs:enable
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function createServerRequest(string $method, $uri, array $serverParams = []): ServerRequestInterface
     {
         if (is_string($uri)) {

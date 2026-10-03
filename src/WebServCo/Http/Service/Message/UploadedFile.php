@@ -6,6 +6,7 @@ namespace WebServCo\Http\Service\Message;
 
 use InvalidArgumentException;
 use OutOfBoundsException;
+use Override;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use UnexpectedValueException;
@@ -71,26 +72,31 @@ final class UploadedFile implements UploadedFileInterface
         $this->isMoved = false;
     }
 
+    #[Override]
     public function getClientFilename(): ?string
     {
         return $this->clientFilename;
     }
 
+    #[Override]
     public function getClientMediaType(): ?string
     {
         return $this->clientMediaType;
     }
 
+    #[Override]
     public function getError(): int
     {
         return $this->errorCode;
     }
 
+    #[Override]
     public function getSize(): int
     {
         return $this->size;
     }
 
+    #[Override]
     public function getStream(): StreamInterface
     {
         if ($this->errorCode !== UPLOAD_ERR_OK) {
@@ -110,6 +116,7 @@ final class UploadedFile implements UploadedFileInterface
      * @param string $targetPath
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function moveTo($targetPath): void
     {
         $this->validateTargetPath($targetPath);

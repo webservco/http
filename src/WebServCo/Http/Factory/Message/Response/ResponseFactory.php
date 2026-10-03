@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WebServCo\Http\Factory\Message\Response;
 
+use Override;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -18,6 +19,7 @@ final class ResponseFactory implements ResponseFactoryInterface
     ) {
     }
 
+    #[Override]
     public function createResponse(int $code = 200, string $reasonPhrase = ''): ResponseInterface
     {
         return new Response(

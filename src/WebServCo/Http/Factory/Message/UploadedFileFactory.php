@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WebServCo\Http\Factory\Message;
 
+use Override;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UploadedFileInterface;
@@ -14,6 +15,7 @@ use const UPLOAD_ERR_OK;
 
 final class UploadedFileFactory implements UploadedFileFactoryInterface
 {
+    #[Override]
     public function createUploadedFile(
         StreamInterface $stream,
         ?int $size = null,

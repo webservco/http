@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WebServCo\Http\Service\Message\Request\Server;
 
 use OutOfBoundsException;
+use Override;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
@@ -117,6 +118,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      * @param mixed $default
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function getAttribute($name, $default = null): mixed
     {
         if (array_key_exists($name, $this->attributes)) {
@@ -132,6 +134,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      * @phpcs:ignore SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
      * @return array<string,mixed>
      */
+    #[Override]
     public function getAttributes(): array
     {
         return $this->attributes;
@@ -145,6 +148,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      * @return array<mixed>
      * @phpcs:enable
      */
+    #[Override]
     public function getCookieParams(): array
     {
         return $this->cookieParams;
@@ -155,6 +159,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      *
      * @return array<string,string>|object|null
      */
+    #[Override]
     public function getParsedBody(): array|object|null
     {
         return $this->parsedBody;
@@ -170,6 +175,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      * @return array<mixed>
      * @phpcs:enable
      */
+    #[Override]
     public function getQueryParams(): array
     {
         return $this->queryParams;
@@ -180,6 +186,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      *
      * @return array<string,array<int,string>|scalar|null>
      */
+    #[Override]
     public function getServerParams(): array
     {
         return $this->serverParams;
@@ -190,6 +197,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      *
      * @return array<string,array<int,\Psr\Http\Message\UploadedFileInterface>>
      */
+    #[Override]
     public function getUploadedFiles(): array
     {
         return $this->uploadedFiles;
@@ -204,6 +212,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      * @return static
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function withAttribute($name, $value): self
     {
         $clone = clone $this;
@@ -227,6 +236,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      * @phpcs:enable
      * @return static
      */
+    #[Override]
     public function withCookieParams(array $cookies): self
     {
         $clone = clone $this;
@@ -242,6 +252,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      * @return static
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function withoutAttribute($name): self
     {
         if (!array_key_exists($name, $this->attributes)) {
@@ -263,6 +274,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      * @phpcs:enable
      * @return static
      */
+    #[Override]
     public function withParsedBody(mixed $data): self
     {
         $clone = clone $this;
@@ -280,6 +292,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      * @phpcs:enable
      * @return static
      */
+    #[Override]
     public function withQueryParams(array $query): self
     {
         $clone = clone $this;
@@ -299,6 +312,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      * @phpcs:enable
      * @return static
      */
+    #[Override]
     public function withUploadedFiles(array $uploadedFiles): self
     {
         $clone = clone $this;

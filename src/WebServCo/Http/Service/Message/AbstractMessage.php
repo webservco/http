@@ -6,6 +6,7 @@ namespace WebServCo\Http\Service\Message;
 
 use InvalidArgumentException;
 use OutOfBoundsException;
+use Override;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;
 
@@ -47,6 +48,7 @@ abstract class AbstractMessage implements MessageInterface
         $this->protocolVersion = '1.1';
     }
 
+    #[Override]
     public function getBody(): StreamInterface
     {
         return $this->body;
@@ -59,6 +61,7 @@ abstract class AbstractMessage implements MessageInterface
      * @return array<string>
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function getHeader($name): array
     {
         if (!$this->hasHeader($name)) {
@@ -80,6 +83,7 @@ abstract class AbstractMessage implements MessageInterface
      * @param string $name
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function getHeaderLine($name): string
     {
         $value = $this->getHeader($name);
@@ -95,11 +99,13 @@ abstract class AbstractMessage implements MessageInterface
      *
      * @return array<string,array<string>>
      */
+    #[Override]
     public function getHeaders(): array
     {
         return $this->headers;
     }
 
+    #[Override]
     public function getProtocolVersion(): string
     {
         return $this->protocolVersion;
@@ -111,6 +117,7 @@ abstract class AbstractMessage implements MessageInterface
      * @param string $name
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function hasHeader($name): bool
     {
         return array_key_exists(strtolower($name), $this->headersMap);
@@ -124,6 +131,7 @@ abstract class AbstractMessage implements MessageInterface
      * @return static
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function withAddedHeader($name, $value): self
     {
         if (!$this->hasHeader($name)) {
@@ -151,6 +159,7 @@ abstract class AbstractMessage implements MessageInterface
      *
      * @return static
      */
+    #[Override]
     public function withBody(StreamInterface $body): self
     {
         if ($body === $this->body) {
@@ -171,6 +180,7 @@ abstract class AbstractMessage implements MessageInterface
      * @return static
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function withHeader($name, $value): self
     {
         $clone = clone $this;
@@ -200,6 +210,7 @@ abstract class AbstractMessage implements MessageInterface
      * @return static
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function withoutHeader($name): self
     {
         if (!$this->hasHeader($name)) {
@@ -223,6 +234,7 @@ abstract class AbstractMessage implements MessageInterface
      * @return static
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function withProtocolVersion($version): self
     {
         if ($version === $this->protocolVersion) {

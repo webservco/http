@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WebServCo\Http\Service\Message;
 
 use InvalidArgumentException;
+use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
@@ -38,6 +39,7 @@ final class UploadedFileParser implements UploadedFileParserInterface
      * @phpcs:enable
      * @return array<string,array<int,\Psr\Http\Message\UploadedFileInterface>>
      */
+    #[Override]
     public function parsePsrUploadedFiles(array $uploadedFiles): array
     {
         $result = [];
@@ -62,6 +64,7 @@ final class UploadedFileParser implements UploadedFileParserInterface
      * @phpcs:enable
      * @return array<string,array<int,\Psr\Http\Message\UploadedFileInterface>>
      */
+    #[Override]
     public function parseSuperglobalUploadedFiles(array $uploadedFiles): array
     {
         $result = [];

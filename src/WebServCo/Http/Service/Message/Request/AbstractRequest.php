@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WebServCo\Http\Service\Message\Request;
 
 use InvalidArgumentException;
+use Override;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
@@ -31,11 +32,13 @@ abstract class AbstractRequest extends AbstractMessage implements RequestInterfa
         $this->requestTarget = null;
     }
 
+    #[Override]
     public function getMethod(): string
     {
         return $this->method;
     }
 
+    #[Override]
     public function getRequestTarget(): string
     {
         if ($this->requestTarget !== null) {
@@ -55,6 +58,7 @@ abstract class AbstractRequest extends AbstractMessage implements RequestInterfa
         return $target;
     }
 
+    #[Override]
     public function getUri(): UriInterface
     {
         return $this->uri;
@@ -67,6 +71,7 @@ abstract class AbstractRequest extends AbstractMessage implements RequestInterfa
      * @return static
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function withMethod($method): self
     {
         $this->requestMethodService->validateMethod($method);
@@ -86,6 +91,7 @@ abstract class AbstractRequest extends AbstractMessage implements RequestInterfa
      *
      * @return static
      */
+    #[Override]
     public function withRequestTarget(mixed $requestTarget): self
     {
         if (!is_string($requestTarget)) {
@@ -112,6 +118,7 @@ abstract class AbstractRequest extends AbstractMessage implements RequestInterfa
      * @return static
      */
     // @phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    #[Override]
     public function withUri(UriInterface $uri, $preserveHost = false): self
     {
         $clone = clone $this;

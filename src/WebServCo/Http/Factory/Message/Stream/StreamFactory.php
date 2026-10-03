@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WebServCo\Http\Factory\Message\Stream;
 
+use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use UnexpectedValueException;
@@ -15,6 +16,7 @@ use function is_resource;
 
 final class StreamFactory implements StreamFactoryInterface
 {
+    #[Override]
     public function createStream(string $content = ''): StreamInterface
     {
         // temporary file/memory wrapper; if bigger than 5MB will be written to temp file.
@@ -29,6 +31,7 @@ final class StreamFactory implements StreamFactoryInterface
         return new Stream($resource);
     }
 
+    #[Override]
     public function createStreamFromFile(string $filename, string $mode = 'r'): StreamInterface
     {
         $resource = fopen($filename, $mode);
@@ -45,6 +48,7 @@ final class StreamFactory implements StreamFactoryInterface
      *
      * @param resource $resource
      */
+    #[Override]
     public function createStreamFromResource($resource): StreamInterface
     {
         return new Stream($resource);
