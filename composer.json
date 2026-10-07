@@ -7,8 +7,12 @@
     ],
     "autoload" : {
         "psr-4" : {
-            "Tests\\Unit\\" : "tests/Unit/",
             "WebServCo\\" : "src/WebServCo/"
+        }
+    },
+    "autoload-dev" : {
+        "psr-4" : {
+            "Tests\\Unit\\" : "tests/Unit/"
         }
     },
     "config": {
