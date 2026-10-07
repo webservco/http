@@ -1,2 +1,10 @@
 # Auto detect text files and perform LF normalization
 * text eol=lf
+
+# Exclude development files from dist archives
+/.ddev export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/docs export-ignore
+/tests export-ignore
+/var export-ignore
