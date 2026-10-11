@@ -20,7 +20,7 @@
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
-    "description" : "A PHP component/library.",
+    "description" : "A PHP component/library. Minimal implementation of the PSR-7 HTTP message interfaces and the PSR-17 factories.",
     "homepage" : "https://webserv.co",
     "keywords" : [
         "component",
