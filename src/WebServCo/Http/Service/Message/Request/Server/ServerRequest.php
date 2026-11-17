@@ -46,7 +46,10 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
     /**
      * Parsed body.
      *
-     * @var array<string,string>|object|null
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
+     * @var array<mixed>|object|null
+     * @phpcs:enable
      */
     private array|object|null $parsedBody;
 
@@ -157,7 +160,12 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
     /**
      * Retrieve any parameters provided in the request body.
      *
-     * @return array<string,string>|object|null
+     * Array can be multidimensional, hence the mixed type.
+     *
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
+     * @return array<mixed>|object|null
+     * @phpcs:enable
      */
     #[Override]
     public function getParsedBody(): array|object|null

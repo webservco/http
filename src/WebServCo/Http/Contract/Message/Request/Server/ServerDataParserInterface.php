@@ -9,7 +9,12 @@ interface ServerDataParserInterface
     /**
      * Parse body data.
      *
-     * @return array<string,string>|object|null
+     * Array data can be multidimensional, hence the mixed type.
+     *
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
+     * @return array<mixed>|object|null
+     * @phpcs:enable
      */
     public function parseBodyData(mixed $data): array|object|null;
 

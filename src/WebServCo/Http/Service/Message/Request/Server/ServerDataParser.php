@@ -19,13 +19,19 @@ final class ServerDataParser implements ServerDataParserInterface
     /**
      * Parse body data.
      *
-     * @return array<string,string>|object|null
+     * Array data can be multidimensional, hence the mixed type.
+     * Eg. form fields "tag[]=a&tag[]=b" or "filter[post]=1".
+     *
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
+     * @return array<mixed>|object|null
+     * @phpcs:enable
      */
     #[Override]
     public function parseBodyData(mixed $data): array|object|null
     {
         if (is_array($data)) {
-            return $this->parseBodyArrayData($data);
+            return $this->parseStringTree($data);
         }
         if (is_object($data)) {
             return $data;
@@ -50,30 +56,7 @@ final class ServerDataParser implements ServerDataParserInterface
     #[Override]
     public function parseCookieQueryParams(array $params): array
     {
-        $parsedParams = [];
-
-        /**
-         * Psalm error: "Unable to determine the type that $.. is being assigned to"
-         * However this is indeed mixed, no solution but to suppress error.
-         *
-         * @psalm-suppress MixedAssignment
-         */
-        foreach ($params as $key => $value) {
-            /**
-             * No need to check key type, it can only be int or string:
-             * https://www.php.net/manual/en/language.types.array.php
-             * "The key can either be an int or a string. The value can be of any type."
-             *
-             * Value can be an array
-             * Situation: query params can be a multi dimensional array.
-             * Eg. "?filter[post]=1,2&filter[author]=12"
-             */
-            $parsedParams[$key] = is_array($value)
-                ? $this->parseCookieQueryParams($value)
-                : $this->extractStringDataFromParam($value);
-        }
-
-        return $parsedParams;
+        return $this->parseStringTree($params);
     }
 
     /**
@@ -114,25 +97,40 @@ final class ServerDataParser implements ServerDataParserInterface
     }
 
     /**
-     * Parse body data as array.
+     * Parse a (possibly multidimensional) array of string values.
+     *
+     * Used for body (form), cookie and query data.
      *
      * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
      * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
      * @param mixed[] $data
+     * @return array<mixed>
      * @phpcs:enable
-     * @return array<string,string>
      */
-    private function parseBodyArrayData(array $data): array
+    private function parseStringTree(array $data): array
     {
         $parsedData = [];
+
+        /**
+         * Psalm error: "Unable to determine the type that $.. is being assigned to"
+         * However this is indeed mixed, no solution but to suppress error.
+         *
+         * @psalm-suppress MixedAssignment
+         */
         foreach ($data as $key => $value) {
-            if (!is_string($key)) {
-                throw new InvalidArgumentException('Invalid data provided.');
-            }
-            if (!is_string($value)) {
-                throw new InvalidArgumentException('Invalid data provided.');
-            }
-            $parsedData[$key] = $value;
+            /**
+             * No need to check key type, it can only be int or string:
+             * https://www.php.net/manual/en/language.types.array.php
+             * "The key can either be an int or a string. The value can be of any type."
+             * Eg. "tag[]=a" (int key at the second level) or "0=a" (int key at the first level).
+             *
+             * Value can be an array
+             * Situation: data can be a multi dimensional array.
+             * Eg. "?filter[post]=1,2&filter[author]=12"
+             */
+            $parsedData[$key] = is_array($value)
+                ? $this->parseStringTree($value)
+                : $this->extractStringDataFromParam($value);
         }
 
         return $parsedData;
