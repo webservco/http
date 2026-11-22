@@ -129,8 +129,8 @@ ddev start
 ddev c u
 # Run all validations.
 ddev c c
-# Run unit tests.
-ddev c test:dox
+# Run unit tests, with coverage (needs Xdebug, which DDEV leaves off).
+ddev xdebug on && ddev c test:dox; ddev xdebug off
 ```
 
 ---
